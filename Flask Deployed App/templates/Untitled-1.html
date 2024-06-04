@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        #search-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        #search-container input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            max-width: 500px;
+        }
+        #search-container button, #search-container select {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        body {
+            overflow-x: hidden;
+        }
+        @media only screen and (max-width: 830px) {
+            .laptop {
+                display: none;
+            }
+        }
+        @media (min-width:830px) and (max-width: 1536px) {
+            .mobile {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+    <script>
+        function loadGoogleTranslate() {
+            new google.translate.TranslateElement("myid");
+        }
+    </script>
+    <div id="myid"></div>
+
+    <script>
+        window.embeddedChatbotConfig = {
+            chatbotId: "8O91iqJIbQdNkiZq0iKRm",
+            domain: "www.chatbase.co"
+        };
+    </script>
+    <script src="https://www.chatbase.co/embed.min.js" chatbotId="8O91iqJIbQdNkiZq0iKRm" domain="www.chatbase.co" defer></script>
+
+    <div class='mobile p-5'>
+        <div class="row mb-5 text-center text-white">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="display-4" style="padding-top: 2%;font-weight: 400;color:red;"><b>Note✍🏻</b></h1>
+                <p class="lead" style="font-weight: 500;color: black;">Please🙏 Open This Site On Laptop/PC 💻 Screen Only</p>
+                <p class="lead" style="font-weight: 500;color: black;">Thank You 🤝</p>    
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5 text-center text-white laptop">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="display-4" style="padding-top: 2%;font-weight: 400;color: rgb(4, 54, 4);"><b>🍁GUARDIANA🍁</b></h1>
+            <h3 class="lead" style="font-weight: 400;color: black;">'HEALTHY PLANT MADE SIMPLE'</h3>
+            <p class="lead" style="font-weight: 350;color: black;">This AI Engine Will Help To Detect Disease From Following Fruits And Veggies</p>
+        </div>
+    </div>
+
+    <center class="laptop">
+        <a href="/index">
+            <button class="bttn-pill bttn-lg btn-success"><b style="color: black;">AI Engine</b></button>
+        </a>
+    </center>
+
+    <div class="row p-5 laptop">
+        <!-- Fruits and veggies images go here as in your provided HTML -->
+
+        <!-- Example entry -->
+        <div class="col">
+            <div class="p-3 bg-white shadow rounded-lg" style="width: 90%;height: 92%;">
+                <img src="https://post.healthline.com/wp-content/uploads/2020/09/Do_Apples_Affect_Diabetes_and_Blood_Sugar_Levels-732x549-thumbnail-1-732x549.jpg" width="250" height="250">
+                <center><p class="lead" style="font-weight: 500;color: black;">Apple</p></center>
+            </div>
+        </div>
+        <!-- Repeat similar blocks for other fruits and vegetables -->
+    </div>
+
+    <center class="laptop">
+        <div class="row p-5">
+            <div class="col">
+                <div class="p-3 bg-white shadow rounded-lg" style="width: 45%;height: 92%;">
+                    <img src="https://images.indianexpress.com/2020/02/strawberry-1200.jpg" width="250" height="250">
+                    <center><p class="lead" style="font-weight: 500;color: black;">Strawberry</p></center>
+                </div>
+            </div>
+            <div class="col">
+                <div class="p-3 bg-white shadow rounded-lg" style="width: 45%;height: 92%;">
+                    <img src="https://images-prod.healthline.com/hlcmsresource/images/AN_images/tomatoes-1296x728-feature.jpg" width="250" height="250">
+                    <center><p class="lead" style="font-weight: 500;color: black;">Tomato</p></center>
+                </div>
+            </div>
+        </div>
+    </center>
+
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Type or click the mic to search">
+        <button id="start-record-btn"><i class="fas fa-microphone"></i></button>
+        <select id="language-select">
+            <option value="en">English</option>
+            <option value="ta">Tamil</option>
+            <!-- Add more languages as needed -->
+        </select>
+    </div>
+
+    <p id="transcription"></p>
+
+    <div id="results"></div>
+
+    <script>
+        const apiKey = 'AIzaSyCDFkXThQqULyN72PPF7e9pJr6pgOqAntY';
+
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onstart = function() {
+                console.log('Voice recognition activated.');
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('transcription').innerText = transcript;
+                document.getElementById('search-input').value = transcript;
+                searchTranscript(transcript);
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event);
+            };
+
+            document.getElementById('start-record-btn').onclick = function() {
+                recognition.start();
+            };
+        } else {
+            console.warn('Web Speech API is not supported by this browser.');
+        }
+
+        function searchTranscript(transcript) {
+            const selectedLanguage = document.getElementById('language-select').value;
+            if (selectedLanguage !== 'en') {
+                translateText(transcript, selectedLanguage)
+                    .then(translatedText => {
+                        performSearch(translatedText, selectedLanguage);
+                    })
+                    .catch(error => {
+                        console.error('Translation error:', error);
+                    });
+            } else {
+                performSearch(transcript, selectedLanguage);
+            }
+        }
+
+        function translateText(text, targetLanguage) {
+            const url = https://translation.googleapis.com/language/translate/v2?key=${apiKey};
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    q: text,
+                    target: targetLanguage,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data && data.data.translations.length > 0) {
+                    return data.data.translations[0].translatedText;
+                } else {
+                    throw new Error('Translation API error');
+                }
+            });
+        }
+
+        function performSearch(transcript, language) {
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ transcript, language }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Search Results:', data);
+                displayResults(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function displayResults(data) {
+            let resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+            data.results.forEach(result => {
+                let resultElement = document.createElement('div');
+                resultElement.innerHTML = <h2>${result.title}</h2><p>${result.desc}</p><p>${result.prevent}</p><img src="${result.image_url}" alt="${result.title}" style="max-width: 100%;">;
+                resultsContainer.appendChild(resultElement);
+            });
+        }
+    </script>
+</body>
+</html>

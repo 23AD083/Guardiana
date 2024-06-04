@@ -53,9 +53,9 @@
         }
 
         label {
-            background-color: rgb(2, 46, 15);
+            background-color: rgb(142, 164, 149);
             color: white;
-            padding: 0.5rem;
+            padding: 1 rem;
             font-family: sans-serif;
             border-radius: 0.3rem;
             cursor: pointer;
@@ -126,31 +126,188 @@
             color: #aaa;
             margin-bottom: 0;
         }
-    </style>
+        #search-container {
+    margin-top : 10px;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    width: 800px; /* Adjust the width as needed */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+#search-container input {
+    flex: 1;
+    padding: 8px;
+    font-size: 14px;
+    width: 300px;
+    border: none;
+    outline: none;
+}
+#search-container button {
+    padding: 8px;
+    font-size: 14px;
+    width: 50px;
+    cursor: pointer;
+    background-color:rgba(39, 236, 17, 0.693);
+    color: #e2e2e2;
+    column-gap: normal;
+}
+/* Adjust the margin to separate the microphone symbol */
+#start-record-btn {
+    margin-left: 50px;
+    box-sizing: border-box;
+    background-color: white;
+    color: #4ECC5A;
+}   
+.button {
+background-color: #4CAF50; /* Green */
+border: none;
+color: white;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+margin: 4px 2px;
+cursor: pointer;
+}
+ </style>
 </head>
 
 <body>
+    
+    <script>
+        window.embeddedChatbotConfig = {
+        chatbotId: "rXG43kTEepJjWBHNBbXWN",
+        domain: "www.chatbase.co"
+        }
+        </script>
+        <script
+        src="https://www.chatbase.co/embed.min.js"
+        chatbotId="rXG43kTEepJjWBHNBbXWN"
+        domain="www.chatbase.co"
+        defer>
+        </script>
+   
     <nav class="navbar navbar-expand-lg navbar-dark " style="background-color:#05380b;">
-        <!-- <a class="navbar-brand" href="#">Navbar</a>
+        
+        <br><a class="navbar-brand" href="#">GUARDIANA</a><br>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-        </button> -->
+        </button>
+
+             <center> 
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search...">
+        <button id="clear-search">x<i class="fas fa-times" style="background-color: #c81a1a"></i></button>
+        <!-- Adjusted the margin of the microphone symbol -->
+        <button id="start-record-btn" style="margin-left: 5px;">Mic<i class="fas fa-microphone" style="background-color: #f5f5f5; color: rgb(35, 202, 107);"></i></button>
+    </div>
+
+
+    <i class="fas fa-microphone"></i>
+
+
+
+
+    <p id="transcription"></p>
+
+    <script>
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onstart = function() {
+                console.log('Voice recognition activated.');
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('transcription').innerText = transcript;
+                document.getElementById('search-input').value = transcript;
+                searchTranscript(transcript);
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event);
+            };
+
+            document.getElementById('start-record-btn').onclick = function() {
+                // Display a message asking for microphone permission
+                if (window.confirm("Allow microphone access for speech recognition?")) {
+                    recognition.start();
+                }
+            };
+        } else {
+            console.warn('Web Speech API is not supported by this browser.');
+        }
+
+        document.getElementById('clear-search').onclick = function() {
+            document.getElementById('search-input').value = '';
+        };
+
+        function searchTranscript(transcript) {
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ transcript }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Search Results:', data);
+                displayResults(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function displayResults(data) {
+            // Update this function to display the search results on your page
+            let resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+            data.results.forEach(result => {
+                let resultElement = document.createElement('div');
+                resultElement.innerHTML = <h2>${result.title}</h2><p>${result.desc}</p>;
+                resultsContainer.appendChild(resultElement);
+            });
+        }
+    </script>
+
+    <div id="results"></div>
+</center>
+
+             
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="navbar-brand active">
-                    <a class="nav-link" href="/" style="color: white;">Home</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/" style="color: white;">Home</a>
                 </li>
-                <li class="navbar-brand active">
+                <li class="nav-item">
                     <a class="nav-link" href="/index" style="color: white;">AI Engine</a>
                 </li>
-                <li class="navbar-brand">
+                <li class="nav-item">
                     <a class="nav-link" href="/market" style="color: white;">Supplements</a>
                 </li>
-                <li class="navbar-brand">
+                <li class="nav-item">
                     <a class="nav-link" href="/contact" style="color: white;">Contact-Us</a>
                 </li>
             </ul>
         </div>
+    </div>
+    </nav>
+<script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+<script>
+    function loadGoogleTranslate() {
+        new google.translate.TranslateElement("myid")
+    }
+</script>
+<div id="myid"></div>
+  
     </nav>
     {% block body %}
 
@@ -159,9 +316,9 @@
         <footer>
             <center>
             <div style="padding: 5;">
-                <a target="_blank" href='mailto:krsikx@gmail.com'><img src="https://image.flaticon.com/icons/png/512/281/281769.png" height="40" width="40"></a>&nbsp
-                <a target="_blank" href="https://www.instagram.com/krsikx_india/"><img src="https://image.flaticon.com/icons/png/512/174/174855.png" height="40" width="40"></a>&nbsp
-                <a target="_blank"href="https://www.linkedin.com/company/krsikx-india-llp/"><img src="https://image.flaticon.com/icons/png/512/174/174857.png" height="40" width="40"></a>&nbsp
+                <t><img src="https://thumbs.dreamstime.com/b/gmail-logo-google-llc-apps-official-logotypes-kyiv-ukraine-october-199945501.jpg" height="30" width="30"></t>
+                <t><img src="https://cdn.iconscout.com/icon/free/png-256/free-google-home-2981837-2476489.png?f=webp" height="30" width="30">  </t>
+                <t><img src="https://cdn.freelogovectors.net/wp-content/uploads/2023/07/twitter-x-logo-freelogovectors.net_.png" height="30" width="30">  </t>
             </div>
             </center>
             <br>
@@ -171,7 +328,7 @@
                 <li class="list-inline-item"><a target="_blank" href="https://www.krsikx.com/copy-of-solutions">About</a></li>
                 <li class="list-inline-item laptop"><a href="/index">AI Engine</a></li>
             </ul>
-            <p class="copyright">Created by Manthan Bhikadiya & Krishna Baldaniya</p>
+            <p class="copyright">Created by BOTANIC GUARDIANS © 2024</p>
         </footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

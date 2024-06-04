@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+[4:32 pm, 4/6/2024] 🦋nithya Shree: {% extends 'base.html' %}
 {% block pagetitle %}
 Plant Disease Detection
 {% endblock pagetitle %}
@@ -78,14 +78,36 @@ Plant Disease Detection
 </div>
 
 
+<div class="alert">
+  <span class="closebtn">&times;</span>  
+  <strong>Sad!</strong> Care me,i am dieing...
+</div>
 
+<div class="alert success">
+  <span class="closebtn">&times;</span>  
+  <strong>Happy! </strong> i am feeling better..
+
+
+<script>
+var close = document.getElementsByClassName("closebtn");
+var i;
+
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function(){
+    var div = this.parentElement;
+    div.style.opacity = "0";
+    setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+}
+</script>
+
+</div>
 
 <div class="row mb-5 text-center text-white laptop">
     <div class="col-lg-10 mx-auto">
-       
+        <h3 class="display-4" style="padding-top: 2%;font-weight: 300;color: rgb(4, 54, 4); font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><b> GUARDIANA </b></h3>
         <h4 class="lead" style="font-weight: 400;color: black;">Healthy plants made simple</h4>
         <br>
-        
         <p class="lead" style="font-weight: 350;color: black;">"AI Engine To Detect Plant Disease"</p>
     </div>
 </div>
@@ -202,29 +224,41 @@ Plant Disease Detection
     </div>
 </div>
 </center>
-<div class="alert">
-  <span class="closebtn">&times;</span>  
-  <strong>Sad!</strong> Care me,i am dieing...
-</div>
-
-<div class="alert success">
-  <span class="closebtn">&times;</span>  
-  <strong>Happy! </strong> i am feeling better..
-
-
-<script>
-var close = document.getElementsByClassName("closebtn");
-var i;
-
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function(){
-    var div = this.parentElement;
-    div.style.opacity = "0";
-    setTimeout(function(){ div.style.display = "none"; }, 600);
-  }
-}
-</script>
-
-</div>
 
 {% endblock body %}
+[4:44 pm, 4/6/2024] 🦋nithya Shree: https://github.com/Nithyashree-Eswaran/Final-Project.git
+[4:49 pm, 4/6/2024] 🦋nithya Shree: <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to Plant Disease Detection</h1>
+
+    <!-- Other content of your homepage -->
+
+    <!-- Chatbot iframe -->
+    <iframe
+        src="https://www.chatbase.co/chatbot-iframe/ENQtaIS9GxK77I9FA1HMf"
+        title="PlantAI"
+        width="100%"
+        style="height: 100%; min-height: 700px"
+        frameborder="0">
+    </iframe>
+
+    <script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "ENQtaIS9GxK77I9FA1HMf",
+        domain: "www.chatbase.co"
+    }
+    </script>
+    <script
+        src="https://www.chatbase.co/embed.min.js"
+        chatbotId="ENQtaIS9GxK77I9FA1HMf"
+        domain="www.chatbase.co"
+        defer>
+    </script>
+</body>
+</html>

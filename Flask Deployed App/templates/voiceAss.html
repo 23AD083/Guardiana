@@ -1,0 +1,49 @@
+<!-- Microphone button for speech recognition -->
+<button id="start-record-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    Mic<i class="fas fa-microphone" style="background-color: #f5f5f5; color: rgb(35, 202, 107);"></i>
+</button>
+
+<!-- Embedded chatbot -->
+<iframe
+    id="chatbot-iframe"
+    src="https://www.chatbase.co/chatbot-iframe/rXG43kTEepJjWBHNBbXWN"
+    title="PlantAI"
+    width="100%"
+    style="height: calc(100% - 60px); min-height: 640px; margin-bottom: -60px;"
+    frameborder="0"
+></iframe>
+
+<script>
+    if ('webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = function() {
+            console.log('Voice recognition activated.');
+        };
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            sendToChatbot(transcript);
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error', event);
+        };
+
+        document.getElementById('start-record-btn').onclick = function() {
+            // Display a message asking for microphone permission
+            if (window.confirm("Allow microphone access for speech recognition?")) {
+                recognition.start();
+            }
+        };
+    } else {
+        console.warn('Web Speech API is not supported by this browser.');
+    }
+
+    function sendToChatbot(transcript) {
+        const chatbotIframe = document.getElementById('chatbot-iframe');
+        chatbotIframe.contentWindow.postMessage({ type: 'voice_input', transcript }, '*');
+    }
+</script>

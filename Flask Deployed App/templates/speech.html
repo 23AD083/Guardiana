@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        #search-container {
+            display: flex;
+            align-items: center;
+        }
+        #search-container input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #search-container button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Plant Disease Detection App</h1>
+    
+    <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+<script>
+    function loadGoogleTranslate() {
+        new google.translate.TranslateElement("myid")
+    }
+</script>
+<div id = "myid"></div>
+    <p id="transcription"></p>
+
+    <script>
+        const apiKey = 'AIzaSyCDFkXThQqULyN72PPF7e9pJr6pgOqAntY';
+
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onstart = function() {
+                console.log('Voice recognition activated.');
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('transcription').innerText = transcript;
+                document.getElementById('search-input').value = transcript;
+                searchTranscript(transcript);
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event);
+            };
+
+            document.getElementById('start-record-btn').onclick = function() {
+                recognition.start();
+            };
+        } else {
+            console.warn('Web Speech API is not supported by this browser.');
+        }
+
+        function searchTranscript(transcript) {
+            const selectedLanguage = document.getElementById('language-select').value;
+            if (selectedLanguage !== 'en') {
+                translateText(transcript, selectedLanguage)
+                    .then(translatedText => {
+                        performSearch(translatedText, selectedLanguage);
+                    })
+                    .catch(error => {
+                        console.error('Translation error:', error);
+                    });
+            } else {
+                performSearch(transcript, selectedLanguage);
+            }
+        }
+
+        function translateText(text, targetLanguage) {
+            const url = https://translation.googleapis.com/language/translate/v2?key=${apiKey};
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    q: text,
+                    target: targetLanguage,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data && data.data.translations.length > 0) {
+                    return data.data.translations[0].translatedText;
+                } else {
+                    throw new Error('Translation API error');
+                }
+            });
+        }
+
+        function performSearch(transcript, language) {
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ transcript, language }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Search Results:', data);
+                displayResults(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function displayResults(data) {
+            let resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+            data.results.forEach(result => {
+                let resultElement = document.createElement('div');
+                resultElement.innerHTML = <h2>${result.title}</h2><p>${result.desc}</p><p>${result.prevent}</p><img src="${result.image_url}" alt="${result.title}" style="max-width: 100%;">;
+                resultsContainer.appendChild(resultElement);
+            });
+        }
+    </script>
+
+    <div id="results"></div>
+</body>
+</html>
