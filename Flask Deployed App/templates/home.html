@@ -13,300 +13,6 @@ Plant Disease Detection
     font-family: 'Poppins', sans-serif;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #23242a;
-}
-
-.box {
-    position: relative;
-    width: 380px;
-    height: 420px;
-    background: #1c1c1c;
-    border-radius: 8px;
-    padding: 50px 40px;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.box::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 380px;
-    height: 420px;
-    background: linear-gradient(0deg, transparent, transparent, #06b80c, #06b80c, #06b80c);
-    z-index: 1;
-    transfrom-origin: bottom right;
-    animation: animate 6s linear infinite;
-}
-
-.box::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 380px;
-    height: 420px;
-    background: linear-gradient(0deg, transparent, transparent, #06b80c, #06b80c, #06b80c);
-    z-index: 1;
-    transform-origin: bottom right;
-    animation: animate 6s linear infinite;
-    animation-delay: -3s;
-}
-
-.borderLine {
-    position: absolute;
-    top: 0;
-    inset: 0;
-}
-
-.borderLine::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 380px;
-    height: 420px;
-    background: linear-gradient(0deg, transparent, transparent, #010101, #010101, #01010);
-    z-index: 1;
-    transform-origin: bottom right;
-    animation: animate 6s linear infinite;
-    animation-delay: -1.5s;
-}
-
-.borderLine::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 380px;
-    height: 420px;
-    background: linear-gradient(0deg, transparent, transparent, #010101, #010101, #010101);
-    z-index: 1;
-    transform-origin: bottom right;
-    animation: animate 6s linear infinite;
-    animation-delay: -4.5s;
-}
-
-@keyframes animate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-.box form{
-    position: absolute;
-    inset: 4px;
-    background: #222;
-   padding: 50px 40px;
-   border-radius: 8px;
-   z-index: 2;
-   display: flex;
-   flex-direction: column;
-}
-
-.box form h2 {
-    color: #fff;
-    font-weight: 500;
-    text-align: center;
-    letter-spacing: 0.1em;
-}
-
-.box form .inputBox {
-    position: relative;
-    width: 300px;
-    margin-top: 35px;
-}
-
-.box form .inputBox input {
-    position: relative;
-    width: 100%;
-    padding: 20px 10px 10px;
-    background: transparent;
-    outline: none;
-    border: none;
-    box-shadow: none;
-    color: #fff;
-    font-size: 1em;
-    letter-spacing: 0.05em;
-    transition: 0.5s;
-    z-index: 10;
-}
-
-.box form .inputBox span {
-    position: absolute;
-    left: 0;
-    padding: 20px 10px 10px;
-    pointer-events: none;
-    color: #8f8f8f;
-    font-size: 1em;
-    letter-spacing: 0.05em;
-    transition: 0.5s;
-}
-
-.box form .inputBox input:valid ~ span,
-.box form .inputBox input:focus ~ span {
-    color: #fff;
-    font-size: 0.75em;
-    transform: translateY(-34px);
-}
-
-.box form .inputBox i {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background: #fff;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: 0.5s;
-    pointer-events: none;
-}
-
-.box form .inputBox input:valid ~ i,
-.box form .inputBox input:focus ~ i {
-    height: 44px;
-}
-
-.box form .links {
-    display: flex;
-    justify-content: space-between;
-}
-
-.box form .links a {
-    margin: 10px 0;
-    font-size: 0.75em;
-    color: #8f8f8f;
-    text-decoration: none;
-}
-
-.box form .links a:hover,
-.box form .links a:nth-child(2) {
-    color: #fff;
-}
-
-.box form .inputBox input[type="submit"] {
-    border: none;
-    outline: none;
-    padding: 9px 25px;
-    background: #fff;
-    cursor: pointer;
-    font-size: 0.9em;
-    border-radius: 4px;
-    font-weight: 600;
-    width: 100px;
-    margin-top: 10px;
-    box-sizing: border-box;
-}
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
-        .container {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('plant');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: blur(5px);
-            z-index: -1;
-        }
-
-        .inner-box {
-            background-color: rgba(242, 239, 239, 0.5);
-            padding: 50px 50px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            max-width: 600px;
-            margin: 15px;
-        }
-
-        .inner-box h1 {
-            margin-top: 0;
-            font-weight: bold;
-        }
-
-        .inner-box p {
-            margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .inner-box form {
-            margin-bottom: 20px;
-        }
-
-        .inner-box label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .inner-box input[type="text"],
-        .inner-box input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .inner-box input[type="submit"],
-        .inner-box .nav-button {
-            width: 100%;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            outline: none;
-        }
-
-        .inner-box input[type="submit"]:hover,
-        .inner-box .nav-button:hover {
-            background-color: #222;
-        }
-
-        .inner-box .nav-button.back {
-            margin-top: 10px;
-            background-color: #555;
-        }
-
-        .inner-box .nav-button.back:hover {
-            background-color: #444;
-        }
 
     body {
         background-image: url('https://img.freepik.com/premium-photo/majestic-garden-cinematic-lighting_717440-749.jpg');
@@ -396,18 +102,19 @@ body {
     .popup {
         display: none;
         position: fixed;
-        background-color: rgb(157, 222, 157);
+        background-color: (rgb(7, 62, 7), 0.5);
         border: 5px solid #888;
         border-radius: 50px;
         z-index: 10000;
         padding: 1px;
         box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        top: 27%;
-        left: 80%;
+        top: 30%;
+        left: 88%;
         transform: translate(-50%, -50%);
         width:20%;
-        height: 20%;
+        height: 17%;
         max-width: 400px;
+        text-decoration-color: #a32121;
     }
 
     .popup .close {
@@ -419,7 +126,8 @@ body {
     .popup-content {
         text-align: center;
         text-align: left;
-        font-size: 10px;
+        font-size: 11px;
+        color: #f4efef;
     }
 
 </style>
@@ -456,68 +164,12 @@ body {
     </div>
 </div>
 
-<div class="container">
-    <div class="inner-box">
-       <marquee> <h1>Welcome to Guardiana!</h1></marquee>
-        <h3>AI Powered Leaf Analysis for Disease Diagnosis and Information</h3>
-        
-        <button id="getStartedButton" class="nav-button" onclick="openLoginPage()">Get Started</button>
+<div class="row mb-5 text-center text-white laptop">
+    <div class="col-lg-10 mx-auto">
+     <h3><b style="color: rgb(237, 238, 236);" font-weight: 400>"Simple, reliable plant health solution,
+        Effortless plant disease detection."</h3>   
+       <br><br>
     </div>
-</div>
-<script>
-function openLoginPage() {
-    var innerBox = document.querySelector('.inner-box');
-    innerBox.innerHTML = `
-        <h1>Login</h1>
-        <form onsubmit="handleLogin(event)">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-            <input type="submit" value="Login">
-        </form>
-        <button class="nav-button" onclick="openSignPage()">Sign In</button>
-        <button class="nav-button back" onclick="openGetStartedPage()">Back</button>
-    `;
-}
-
-function openSignPage() {
-    var innerBox = document.querySelector('.inner-box');
-    innerBox.innerHTML = `
-        <h1>Sign In</h1>
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-            <input type="submit" value="Sign In">
-        </form>
-        <button class="nav-button back" onclick="openLoginPage()">Back</button>
-    `;
-}
-
-function openGetStartedPage() {
-    var innerBox = document.querySelector('.inner-box');
-    innerBox.innerHTML = `
-        <h1>Welcome to Guardiana!</h1>
-        <h2>AI Powered Leaf Analysis for Disease Diagnosis and Information</h2>
-        <p><b>Here, you'll discover the wonders of plant health with our cutting-edge AI-powered leaf image analysis, providing accurate disease diagnosis and effective remedies. Delve into the rich tapestry of plant life as we offer insights into cultivation tips, the purpose behind various plants, and much more. Join us in nurturing a greener, healthier world through knowledge and innovation.</b></p>
-        <button id="getStartedButton" class="nav-button" onclick="openLoginPage()">Get Started</button>
-    `;
-}
-
-function handleLogin(event) {
-    event.preventDefault();
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-   
-    if (username === "admin" && password === "password") {
-        window.open('/ai-engine', '_blank');
-    } else {
-        alert('Invalid login credentials!');
-    }
-}
-</script>
 
 <center class="laptop">
     <a href="/index">

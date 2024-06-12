@@ -48,7 +48,11 @@ AI Engine
                     <!-- Default bootstrap file upload-->
                     <h3>Live Detection</h3><br>
                    <center></center> <img  src="{{ url_for('video_feed') }}" width="200" height="200" aria-placeholder="Live Detection"/></center>
-                </body>
+                </body><br>
+                <center>
+                    <br>
+                    <a class="mx-2"><button type="submit" class="btn btn-outline-success">Capture</button></a>
+                </center>
 
                     <form action="/submit" method="POST" enctype="multipart/form-data">
                         <div class="custom-file overflow-hidden mb-4"><br>
