@@ -7,7 +7,7 @@ AI Engine
 {% block body %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Real-Time Object Detection</title>
+<title>Live Detection</title>
 </head>
 <body>
 <div>
@@ -16,7 +16,7 @@ AI Engine
         <!-- For demo purpose -->
         <div class="row mb-5 text-center text-white">
             <div class="col-lg-10 mx-auto">
-                <h1 class="display-4" style="padding-top: 2%;font-weight: 400;color: rgb(4, 54, 4);"><b>AI Engine</b></h1>
+                <h1 class="display-4" style="padding-top: 2%;font-weight: 400;color: rgb(241, 243, 241);"><b>AI Engine</b></h1>
                 
             </div>
         </div>
@@ -28,28 +28,30 @@ AI Engine
         </script>
         <div id="myid"></div>
         <!-- End -->
-        <div class="row ">
+        <div class="row " >
             <div class="col mx-auto">
-                <div class="p-5 bg-white shadow rounded-lg" style="height: 95%;">
+                <div class="p-5 bg-white shadow rounded-lg" style="width: 98%";  height: "98px";  background-color:" aquamarine" color="green">
 
                     <h5><b>Why is it necessary to detect disease in plant ?</b></h5>
-                    <p>Detecting plant diseases is crucial for their growth, productivity, and overall well-being. If untreated, these issues can spread quickly, damaging plants, soil, and the ecosystem. Like silent friends, plants need attentive care. By monitoring their health and detecting problems early, we can provide the necessary treatment, helping them recover and thrive. As plant caretakers, it's our responsibility to observe changes in color, shape, or behavior, preventing disease spread and promoting healthy growth. Let's be the plant doctors they need, ensuring a bountiful harvest with love, care, and attention.
-                        
-                    </p>
+                   <h5> <p>Plant Disease Identification Importance:<br><br>
+                      <li> Essential for plant health, growth, and production.</li> 
+                      <li> Rapid development can harm plants, soil, and ecosystem.   </li> 
+                      <li>Careful maintenance crucial for plant recovery.<br><br>
+                       <li> Early identification aids in appropriate therapy.</li>
+                      <li>  Plant caregivers monitor changes to prevent illness spread.</li>
+                       <li> • Plant doctors provide love, care, and attention for crops.</p></h5>
                 </div>
             </div>
             <div class="col mx-auto">
-                <div class="p-5 bg-white shadow rounded-lg" style="height: 95%;"><img
-                        src="https://www.pngjoy.com/pngl/250/4840262_plants-png-indoors-tropical-plant-png-hd-png.png "
-                        height="300" alt="" width="200" class="d-block mx-auto mb-4 rounded-pill">
+                <div class="p-5 bg-white shadow rounded-lg" style="height: 98%;">
 
                     <!-- Default bootstrap file upload-->
-                    <h1>Real-Time Object Detection</h1>
-                    <img src="{{ url_for('video_feed') }}" width="600" />
+                    <h3>Live Detection</h3><br>
+                   <center></center> <img  src="{{ url_for('video_feed') }}" width="200" height="200" aria-placeholder="Live Detection"/></center>
                 </body>
 
                     <form action="/submit" method="POST" enctype="multipart/form-data">
-                        <div class="custom-file overflow-hidden mb-4">
+                        <div class="custom-file overflow-hidden mb-4"><br>
                             <input type="file" id="actual-btn" hidden name="image" />
                             <label for="actual-btn">Choose File</label>
                             <span id="file-chosen">No file chosen</span>
@@ -71,16 +73,15 @@ AI Engine
                 </div>
             </div>
             <div class="col mx-auto">
-                <div class="p-5 bg-white shadow rounded-lg" style="height: 95%;">
-                    <h5><b>Prevent Plant Disease follow below steps:</b></h5>
+                <div class="p-5 bg-white shadow rounded-lg" style="height: 98%;">
+                    <h5><b>To avoid plant disease, do the following actions:</b></h5>
                     <ol>
-                        <li>Follow Good Sanitation Practices.</li>
-                        <li>Fertilize to Keep Your Plants Healthy.</li>
-                        <li>Inspect Plants for Diseases Before You Bring Them Home.</li>
-                        <li>Allow the Soil to Warm Before Planting.</li>
-                        <li>Ensure a Healthy Vegetable Garden By Rotating Crops.</li>
-                        <li>Provide Good Air Circulation</li>
-                        <li>Remove Diseased Stems and Foliage</li>
+                        <li>Adhere to good hygiene procedures.</li>
+                        <li>Fertilize to Keep Your Plants Healthy.Before bringing plants home, make sure they are free of diseases.</li> 
+                        <li>Let the Soil Warm Up a Little Before Planting.</li>
+                         <li>Rotate your crops to ensure a healthy vegetable garden.</li>
+                          <li>Make sure there is adequate air circulation</li>
+                           <li>Eliminate Sick Stems and Foliage</li>
                     </ol>
                     <a target="_blank" href="https://www.thespruce.com/prevent-plant-diseases-in-your-garden-2539511"
                         class="mx-2"><button type="button" class="btn btn-outline-success">More info</button></a>
@@ -99,5 +100,5 @@ AI Engine
         fileChosen.textContent = this.files[0].name
     })
 </script>
-
+</html>
 {% endblock body %}

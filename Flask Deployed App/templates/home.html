@@ -4,227 +4,693 @@ Plant Disease Detection
 {% endblock pagetitle %}
 {% block body %}
 <style>
-  body{
-    overflow-x: hidden;
-  }
-  @media only screen and (max-width: 830px) {
-    .laptop{
-      display: none;
+   
+        body {  
+            * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #23242a;
+}
+
+.box {
+    position: relative;
+    width: 380px;
+    height: 420px;
+    background: #1c1c1c;
+    border-radius: 8px;
+    padding: 50px 40px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 420px;
+    background: linear-gradient(0deg, transparent, transparent, #06b80c, #06b80c, #06b80c);
+    z-index: 1;
+    transfrom-origin: bottom right;
+    animation: animate 6s linear infinite;
+}
+
+.box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 420px;
+    background: linear-gradient(0deg, transparent, transparent, #06b80c, #06b80c, #06b80c);
+    z-index: 1;
+    transform-origin: bottom right;
+    animation: animate 6s linear infinite;
+    animation-delay: -3s;
+}
+
+.borderLine {
+    position: absolute;
+    top: 0;
+    inset: 0;
+}
+
+.borderLine::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 420px;
+    background: linear-gradient(0deg, transparent, transparent, #010101, #010101, #01010);
+    z-index: 1;
+    transform-origin: bottom right;
+    animation: animate 6s linear infinite;
+    animation-delay: -1.5s;
+}
+
+.borderLine::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 420px;
+    background: linear-gradient(0deg, transparent, transparent, #010101, #010101, #010101);
+    z-index: 1;
+    transform-origin: bottom right;
+    animation: animate 6s linear infinite;
+    animation-delay: -4.5s;
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
     }
-  }
-  @media (min-width:830px) and (max-width: 1536px){
-    .mobile{
-      display: none;
+    100% {
+        transform: rotate(360deg);
     }
-  }
-
-  .alert {
-  padding: 20px;
-  background-color: #f44336;
-  color: white;
-  opacity: 1;
-  transition: opacity 0.6s;
-  margin-bottom: 15px;
+}
+.box form{
+    position: absolute;
+    inset: 4px;
+    background: #222;
+   padding: 50px 40px;
+   border-radius: 8px;
+   z-index: 2;
+   display: flex;
+   flex-direction: column;
 }
 
-.alert.success {background-color: #96edcd;}
-.alert.info {background-color: #2196F3;}
-.alert.warning {background-color: #ff9800;}
-
-.closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
+.box form h2 {
+    color: #fff;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.1em;
 }
 
-.closebtn:hover {
-  color: black;
+.box form .inputBox {
+    position: relative;
+    width: 300px;
+    margin-top: 35px;
 }
+
+.box form .inputBox input {
+    position: relative;
+    width: 100%;
+    padding: 20px 10px 10px;
+    background: transparent;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+    z-index: 10;
+}
+
+.box form .inputBox span {
+    position: absolute;
+    left: 0;
+    padding: 20px 10px 10px;
+    pointer-events: none;
+    color: #8f8f8f;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+}
+
+.box form .inputBox input:valid ~ span,
+.box form .inputBox input:focus ~ span {
+    color: #fff;
+    font-size: 0.75em;
+    transform: translateY(-34px);
+}
+
+.box form .inputBox i {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.box form .inputBox input:valid ~ i,
+.box form .inputBox input:focus ~ i {
+    height: 44px;
+}
+
+.box form .links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box form .links a {
+    margin: 10px 0;
+    font-size: 0.75em;
+    color: #8f8f8f;
+    text-decoration: none;
+}
+
+.box form .links a:hover,
+.box form .links a:nth-child(2) {
+    color: #fff;
+}
+
+.box form .inputBox input[type="submit"] {
+    border: none;
+    outline: none;
+    padding: 9px 25px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.9em;
+    border-radius: 4px;
+    font-weight: 600;
+    width: 100px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('plant');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(5px);
+            z-index: -1;
+        }
+
+        .inner-box {
+            background-color: rgba(242, 239, 239, 0.5);
+            padding: 50px 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 600px;
+            margin: 15px;
+        }
+
+        .inner-box h1 {
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        .inner-box p {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .inner-box form {
+            margin-bottom: 20px;
+        }
+
+        .inner-box label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .inner-box input[type="text"],
+        .inner-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .inner-box input[type="submit"],
+        .inner-box .nav-button {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            outline: none;
+        }
+
+        .inner-box input[type="submit"]:hover,
+        .inner-box .nav-button:hover {
+            background-color: #222;
+        }
+
+        .inner-box .nav-button.back {
+            margin-top: 10px;
+            background-color: #555;
+        }
+
+        .inner-box .nav-button.back:hover {
+            background-color: #444;
+        }
+
+    body {
+        background-image: url('https://img.freepik.com/premium-photo/majestic-garden-cinematic-lighting_717440-749.jpg');
+        background-size: cover;
+        background-position: center;
+        -webkit-backdrop-filter: contrast();
+        backdrop-filter: blur(10px);
+        overflow-x: hidden;
+    }
+
+    .google-translate-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+
+    .google-translate-button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    @media only screen and (max-width: 830px) {
+        .laptop {
+            display: none;
+        }
+    }
+
+    @media (min-width: 830px) and (max-width: 1536px) {
+        .mobile {
+            display: none;
+        }
+    }
+
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+    }
+
+    .alert.success {
+        background-color: #96edcd;
+    }
+
+    .alert.info {
+        background-color: #2196F3;
+    }
+
+    .alert.warning {
+        background-color: #ff9800;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+
+    #chatbot-container {
+        position: fixed;
+        bottom: 20px; /* Adjust the distance from the bottom as needed */
+        right: 20px; /* Adjust the distance from the right as needed */
+        z-index: 9999; /* Ensure it's above other content */
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        background-color: rgb(157, 222, 157);
+        border: 5px solid #888;
+        border-radius: 50px;
+        z-index: 10000;
+        padding: 1px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        top: 27%;
+        left: 80%;
+        transform: translate(-50%, -50%);
+        width:20%;
+        height: 20%;
+        max-width: 400px;
+    }
+
+    .popup .close {
+        float: right;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .popup-content {
+        text-align: center;
+        text-align: left;
+        font-size: 10px;
+    }
 
 </style>
+
+
+
+<!-- Google Translate code inside a container -->
 <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
-    <script>
-        function loadGoogleTranslate() {
-            new google.translate.TranslateElement("myid")
-        }
-    </script>
-    <div id="myid"></div>
-    <script>
-      window.embeddedChatbotConfig = {
-      chatbotId: "8O91iqJIbQdNkiZq0iKRm",
-      domain: "www.chatbase.co"
-      }
-      </script>
-      <script
-      src="https://www.chatbase.co/embed.min.js"
-      chatbotId="8O91iqJIbQdNkiZq0iKRm"
-      domain="www.chatbase.co"
-      defer>
-      </script>
+<script>
+    function loadGoogleTranslate() {
+        new google.translate.TranslateElement("myid");
+    }
+</script>
+<div id="myid"></div>
+
+<!-- Embed Chatbot -->
+<div id="chatbot-container">
+<script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "8O91iqJIbQdNkiZq0iKRm",
+        domain: "www.chatbase.co"
+    };
+</script>
+<script src="https://www.chatbase.co/embed.min.js" chatbotId="8O91iqJIbQdNkiZq0iKRm" domain="www.chatbase.co" defer></script>
+</div>
 
 <div class='mobile p-5'>
-  <div class="row mb-5 text-center text-white">
-    <div class="col-lg-10 mx-auto">
-      <h1 class="display-4" style="padding-top: 2%;font-weight: 400;color:red;"><b>Note✍🏻</b></h1>
-      <p class="lead" style="font-weight: 500;color: black;">Please🙏 Open This Site On Laptop/PC 💻 Screen Only</p>
-      <p class="lead" style="font-weight: 500;color: black;">Thank You 🤝</p>    
+    <div class="row mb-5 text-center text-white">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="display-4" style="padding-top: 2%;font-weight: 400;color:red;"><b>Note✍🏻</b></h1>
+            <p class="lead" style="font-weight: 500;color: black;">Please🙏 Open This Site On Laptop/PC 💻 Screen Only</p>
+            <p class="lead" style="font-weight: 500;color: black;">Thank You 🤝</p>
+        </div>
     </div>
 </div>
-</div>
 
-
-
-
-<div class="row mb-5 text-center text-white laptop">
-    <div class="col-lg-10 mx-auto">
-       
-        <h4 class="lead" style="font-weight: 400;color: black;">Healthy plants made simple</h4>
-        <br>
+<div class="container">
+    <div class="inner-box">
+       <marquee> <h1>Welcome to Guardiana!</h1></marquee>
+        <h3>AI Powered Leaf Analysis for Disease Diagnosis and Information</h3>
         
-        <p class="lead" style="font-weight: 350;color: black;">"AI Engine To Detect Plant Disease"</p>
+        <button id="getStartedButton" class="nav-button" onclick="openLoginPage()">Get Started</button>
     </div>
 </div>
-
-<center class="laptop">
-    <a href="/index">
-    <button class = "bttn-pill bttn-lg btn-success"><b style="color: black;"><i>AI Engine</i></b></button>
-    </a>
-</center>
-<div class="row p-5 laptop">
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-          <img src="https://post.healthline.com/wp-content/uploads/2020/09/Do_Apples_Affect_Diabetes_and_Blood_Sugar_Levels-732x549-thumbnail-1-732x549.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Apple</p></center>
-        </div>
-    </div>
-    <div class="col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://www.supermarketperimeter.com/ext/resources/0430-blueberries.png?t=1588260305&width=1080" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Blueberry</p></center>
-        </div>
-    </div>
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/health_benefits_of_cherries_slideshow/1800x1200_health_benefits_of_cherries_slideshow.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Cherry</p></center>
-        </div>
-    </div>
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2023/6/28/fresh-corn-on-the-cob-partially-shucked-on-dark-background.jpg.rend.hgtvcom.1280.1280.suffix/1687987003387.jpeg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Corn</p></center>
-        </div>
-    </div>
-</div>
-<div class="row p-5 laptop">
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-          <img src="https://i.ndtvimg.com/i/2015-09/grapes_625x350_61443376353.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Grape</p></center>
-        </div>
-    </div>
-    <div class="col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://www.irishtimes.com/polopoly_fs/1.3923226.1560339148!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Orange</p></center>
-        </div>
-    </div>
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/articles/health_tools/the_health_benefits_of_peaches_slideshow/thinkstock_rf_peaches.jpg?resize=650px:*" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Peach</p></center>
-        </div>
-    </div>
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://images.saymedia-content.com/.image/t_share/MTc0MTgxNTM0MzI3MTIxNDA0/bell-peppers-do-the-different-colors-really-taste-any-different.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Pepper Bell</p></center>
-        </div>
-    </div>
-</div>
-
-
-<div class="row p-5 laptop">
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-          <img src="https://m.economictimes.com/thumb/height-450,width-600,imgsize-111140,msid-72862126/potato-getty.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Potato</p></center>
-        </div>
-    </div>
-    <div class="col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/326/326272/raspberries-with-ketones-in-a-bowl.jpg?w=1155&h=1541" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Raspberry</p></center>
-        </div>
-    </div>
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://m.economictimes.com/thumb/msid-66988154,width-1200,height-900,resizemode-4,imgsize-211276/soyabean-agencies.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Soybean</p></center>
-        </div>
-    </div>
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
-
-          <img src="https://post.healthline.com/wp-content/uploads/2020/08/squash-fruit-or-vegetable-732x549-thumbnail-732x549.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Squash</p></center>
-        </div>
-    </div>
-</div>
-
-<center class="laptop">
-<div class="row p-5">
-    <div class=" col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 30%;height: 92%;">
-          <img src="https://images.indianexpress.com/2020/02/strawberry-1200.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Strawberry</p></center>
-        </div>
-    </div>
-    <div class="col">
-        <div class="p-3 bg-white shadow rounded-lg" style="width: 30%;height: 92%;">
-
-          <img src="https://images-prod.healthline.com/hlcmsresource/images/AN_images/tomatoes-1296x728-feature.jpg" width="250" height="250">
-          <center><p class="lead" style="font-weight: 500;color: black;">Tomato</p></center>
-        </div>
-    </div>
-</div>
-</center>
-<div class="alert">
-  <span class="closebtn">&times;</span>  
-  <strong>Sad!</strong> Care me,i am dieing...
-</div>
-
-<div class="alert success">
-  <span class="closebtn">&times;</span>  
-  <strong>Happy! </strong> i am feeling better..
-
-
 <script>
-var close = document.getElementsByClassName("closebtn");
-var i;
+function openLoginPage() {
+    var innerBox = document.querySelector('.inner-box');
+    innerBox.innerHTML = `
+        <h1>Login</h1>
+        <form onsubmit="handleLogin(event)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <input type="submit" value="Login">
+        </form>
+        <button class="nav-button" onclick="openSignPage()">Sign In</button>
+        <button class="nav-button back" onclick="openGetStartedPage()">Back</button>
+    `;
+}
 
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function(){
-    var div = this.parentElement;
-    div.style.opacity = "0";
-    setTimeout(function(){ div.style.display = "none"; }, 600);
-  }
+function openSignPage() {
+    var innerBox = document.querySelector('.inner-box');
+    innerBox.innerHTML = `
+        <h1>Sign In</h1>
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <input type="submit" value="Sign In">
+        </form>
+        <button class="nav-button back" onclick="openLoginPage()">Back</button>
+    `;
+}
+
+function openGetStartedPage() {
+    var innerBox = document.querySelector('.inner-box');
+    innerBox.innerHTML = `
+        <h1>Welcome to Guardiana!</h1>
+        <h2>AI Powered Leaf Analysis for Disease Diagnosis and Information</h2>
+        <p><b>Here, you'll discover the wonders of plant health with our cutting-edge AI-powered leaf image analysis, providing accurate disease diagnosis and effective remedies. Delve into the rich tapestry of plant life as we offer insights into cultivation tips, the purpose behind various plants, and much more. Join us in nurturing a greener, healthier world through knowledge and innovation.</b></p>
+        <button id="getStartedButton" class="nav-button" onclick="openLoginPage()">Get Started</button>
+    `;
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+   
+    if (username === "admin" && password === "password") {
+        window.open('/ai-engine', '_blank');
+    } else {
+        alert('Invalid login credentials!');
+    }
 }
 </script>
 
+<center class="laptop">
+    <a href="/index">
+        <button class="bttn-pill bttn-lg btn-success"><b style="color: black;"><i>AI Engine</i></b></button>
+    </a>
+</center>
+
+<div class="row p-5 laptop">
+    <div class="col">
+        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+            <img src="https://post.healthline.com/wp-content/uploads/2020/09/Do_Apples_Affect_Diabetes_and_Blood_Sugar_Levels-732x549-thumbnail-1-732x549.jpg" width="250" height="250" data-name="Apple" onclick="showPopup(this)">
+            <center><p class="lead" style="font-weight: 500;color: black;">Apple</p></center>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+            <img src="https://www.supermarketperimeter.com/ext/resources/0430-blueberries.png?t=1588260305&width=1080" width="250" height="250" data-name="Blueberry" onclick="showPopup(this)">
+            <center><p class="lead" style="font-weight: 500;color: black;">Blueberry</p></center>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+            <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/health_benefits_of_cherries_slideshow/1800x1200_health_benefits_of_cherries_slideshow.jpg" width="250" height="250" data-name="Cherry" onclick="showPopup(this)">
+            <center><p class="lead" style="font-weight: 500;color: black;">Cherry</p></center>
+        </div>
+    </div>
+    <div class="col">
+        <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+            <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2023/6/28/fresh-corn-on-the-cob-partially-shucked-on-dark-background.jpg.rend.hgtvcom.1280.1280.suffix/1687987003387.jpeg" width="250" height="250" data-name="Corn" onclick="showPopup(this)">
+            <center><p class="lead" style="font-weight: 500;color: black;">Corn</p></center>
+        </div>
+    </div>
+</div>
+<div class="row p-5 laptop">
+  <div class=" col">
+      <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+        <img src="https://i.ndtvimg.com/i/2015-09/grapes_625x350_61443376353.jpg" width="250" height="250">
+        <center><p class="lead" style="font-weight: 500;color: black;">Grape</p></center>
+      </div>
+  </div>
+  <div class="col">
+      <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+
+        <img src="https://www.irishtimes.com/polopoly_fs/1.3923226.1560339148!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg" width="250" height="250"  data-name="Orange" onclick="showPopup(this)">
+        <center><p class="lead" style="font-weight: 500;color: black;">Orange</p></center>
+      </div>
+  </div>
+  
+  <div class=" col">
+      <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+
+        <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/articles/health_tools/the_health_benefits_of_peaches_slideshow/thinkstock_rf_peaches.jpg?resize=650px:*" width="250" height="250" data-name="Peach" onclick="showPopup(this)">
+        <center><p class="lead" style="font-weight: 500;color: black;">Peach</p></center>
+      </div>
+  </div>
+  <div class=" col">
+      <div class="p-3 bg-white shadow rounded-lg" style="width: 60%;height: 92%;">
+
+        <img src="https://images.saymedia-content.com/.image/t_share/MTc0MTgxNTM0MzI3MTIxNDA0/bell-peppers-do-the-different-colors-really-taste-any-different.jpg" width="250" height="250"   data-name="Pepper Bell" onclick="showPopup(this)">
+        <center><p class="lead" style="font-weight: 500;color: black;">Pepper Bell</p></center>
+      </div>
+  </div>
+</div>
+<center class="laptop">
+  <div class="row p-5">
+      <div class=" col">
+          <div class="p-3 bg-white shadow rounded-lg" style="width: 30%;height: 92%;">
+            <img src="https://images.indianexpress.com/2020/02/strawberry-1200.jpg" width="250" height="250"  data-name="Strawberry" onclick="showPopup(this)">
+            <center><p class="lead" style="font-weight: 500;color: black;">Strawberry</p></center>
+          </div>
+      </div>
+      <div class="col">
+          <div class="p-3 bg-white shadow rounded-lg" style="width: 30%;height: 92%;">
+  
+            <img src="https://images-prod.healthline.com/hlcmsresource/images/AN_images/tomatoes-1296x728-feature.jpg" width="250" height="250"  data-name="Tomato" onclick="showPopup(this)">
+            <center><p class="lead" style="font-weight: 500;color: black;">Tomato</p></center>
+          </div>
+      </div>
+  </div>
+  </center>
+  
+
+<!-- Popup Modal -->
+<div id="popup" class="popup">
+  <span class="close" onclick="closePopup()">&times;</span>
+  <div class="popup-content" id="popup-content"></div>
 </div>
 
+<script>
+  // Object containing fruit information
+  const fruitInfo = {
+      Apple: {
+          scientificName: "Malus domestica",
+          growingRegions: "China, India, Poland, Italy, Russia, US",
+          lifetimeOfFruit: "1-2 weeks"
+      },
+      Cherry: {
+          scientificName: "Prunus avium",
+          growingRegions: "Europe, Asia, North America",
+          lifetimeOfFruit: "2-4 days"
+      },
+      Blueberry: {
+          scientificName: "Vaccinium corymbosum",
+          growingRegions: "North America, Poland, New Zealand, Australia, Canada",
+          lifetimeOfFruit: "10-20 years"
+      },
+      Corn: {
+          scientificName: "Zea mays",
+          growingRegions: "US, China, Brazil, India, South Africa, France",
+          lifetimeOfFruit: "1-2 days"
+      },
+      Orange: {
+          scientificName: "Citrus sinensis",
+          growingRegions: "India, US, China, Italy, Egypt, South Africa",
+          lifetimeOfFruit: "5-6 days"
+      },
+      Peach: {
+          scientificName: "Prunus persica",
+          growingRegions: "China, Europe, US, Italy, Turkey, Spain",
+          lifetimeOfFruit: "1-2 days"
+      },
+      "Grape": {
+          scientificName: "Vitis vinifera",
+          growingRegions: "India, Europe, America, Asia, Australia, Africa",
+          lifetimeOfFruit: "3-4 days"
+      },
+      "Pepper Bell": {
+          scientificName: "Capsicum annuum",
+          growingRegions: "US, Mexico, China, Italy, Morocco, Netherlands",
+          lifetimeOfFruit: "2-3 days"
+      },
+      Strawberry: {
+          scientificName: "Fragaria × ananassa",
+          growingRegions: "South Korea, US, Spain, Turkey, Mexico, Egypt",
+          lifetimeOfFruit: "2-3 days"
+      },
+      Tomato: {
+          scientificName: "Solanum lycopersicum",
+          growingRegions: "US, China, India, Turkey, Egypt, Italy",
+          lifetimeOfFruit: "4-7 days"
+      },
+     
+  };
+
+  // Function to display popup with fruit information
+  function showPopup(element) {
+      const fruitName = element.getAttribute("data-name");
+      const info = fruitInfo[fruitName]; // Access the fruit information based on the fruit name
+
+      const popup = document.getElementById("popup");
+      const popupContent = document.getElementById("popup-content");
+
+      if (info) {
+          // Construct the HTML content for the popup using the fruit information
+          popupContent.innerHTML = `
+              <center><h4><b>${fruitName}</b></h4></center> 
+              <p><strong>Scientific Name:</strong> ${info.scientificName}</p>
+              <p><strong>Main Growing Regions:</strong> ${info.growingRegions}</p>
+              <p><strong>Lifetime:</strong> ${info.lifetimeOfFruit}</p>
+          `;
+          popup.style.display = "block"; // Display the popup
+      }
+  }
+
+  // Function to close the popup
+  function closePopup() {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none"; // Hide the popup
+  }
+</script>
+
+
+
 {% endblock body %}
+
+

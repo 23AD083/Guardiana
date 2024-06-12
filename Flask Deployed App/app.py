@@ -51,6 +51,10 @@ def prediction(image_path):
 
 
 app = Flask(__name__)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template('base.html')
+
 
 @app.route('/')
 def home_page():
